@@ -5,10 +5,18 @@ function App() {
   const [titel,setTitle] = useState("");
   const [date,setDate] = useState("");
   const [discrption,setDes] = useState("");
+  const addTransaction = (ev)=>{
+    ev.preventDefault();
+    fetch("http://localhost:4041/api/transaction",{
+      method:"post",
+      headers:{"Content-Type": "application/json" },
+      body:JSON.stringify({titel,date,discrption})
+    }).then((response)=>response.json().then(info => console.log("result",info)))
+  }
   return (
     <div className="App">
       <h1>$400</h1>
-      <form>
+      <form onSubmit={addTransaction}>
         <div className='basics'>
           <input type='text' placeholder='for buying a new samsung tv' onClick={(ev)=>setTitle(ev.target.value)} />
           <input type='datetime-local'  onClick={(ev)=>setDate(ev.target.value)}/>S
